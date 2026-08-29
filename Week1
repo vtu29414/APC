@@ -1,0 +1,271 @@
+Task1:
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+
+        int left = 0;
+        int right = n - 1;
+
+        for (int i = n - 1; i >= 0; i--) {
+            int leftSquare = nums[left] * nums[left];
+            int rightSquare = nums[right] * nums[right];
+
+            if (leftSquare > rightSquare) {
+                result[i] = leftSquare;
+                left++;
+            } else {
+                result[i] = rightSquare;
+                right--;
+            }
+        }
+
+        return result;
+    }
+}
+Task2:
+import java.util.HashMap;
+
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+
+            if (map.containsKey(nums[i])) {
+                int previousIndex = map.get(nums[i]);
+
+                if (i - previousIndex <= k) {
+                    return true;
+                }
+            }
+
+            // Store the latest index
+            map.put(nums[i], i);
+        }
+
+        return false;
+    }
+}
+Task3:
+class Solution {
+    public int[] runningSum(int[] nums) {
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            nums[i] = sum;
+        }
+
+        return nums;
+    }
+}
+Task4:
+class Solution {
+    public int[] getSumAbsoluteDifferences(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+
+        long totalSum = 0;
+
+        // Find total sum
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        long prefixSum = 0;
+
+        for (int i = 0; i < n; i++) {
+            long current = nums[i];
+
+            // Sum of differences with elements on the left
+            long left = current * i - prefixSum;
+
+            // Sum of differences with elements on the right
+            long right = (totalSum - prefixSum - current)
+                       - current * (n - i - 1);
+
+            result[i] = (int) (left + right);
+
+            // Add current element to prefix sum
+            prefixSum += current;
+        }
+
+        return result;
+    }
+}
+Task5:
+class Solution {
+    public int[] getSumAbsoluteDifferences(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+
+        long totalSum = 0;
+
+        // Find total sum
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        long prefixSum = 0;
+
+        for (int i = 0; i < n; i++) {
+            long current = nums[i];
+
+            // Sum of differences with elements on the left
+            long left = current * i - prefixSum;
+
+            // Sum of differences with elements on the right
+            long right = (totalSum - prefixSum - current)
+                       - current * (n - i - 1);
+
+            result[i] = (int) (left + right);
+
+            // Add current element to prefix sum
+            prefixSum += current;
+        }
+
+        return result;
+    }
+}
+Task6:
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            } 
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+}
+Task7:
+class Solution {
+    public void sortColors(int[] nums) {
+        int low = 0;
+        int mid = 0;
+        int high = nums.length - 1;
+
+        while (mid <= high) {
+
+            if (nums[mid] == 0) {
+                // Swap low and mid
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+
+                low++;
+                mid++;
+            }
+            
+            else if (nums[mid] == 1) {
+                // 1 is already in the correct middle section
+                mid++;
+            }
+            
+            else { // nums[mid] == 2
+                // Swap mid and high
+                int temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+
+                high--;
+            }
+        }
+    }
+}
+Task8:
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = prices[0];
+        int maxProfit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+
+            // Update minimum buying price
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+
+            // Calculate today's profit
+            int profit = prices[i] - minPrice;
+
+            // Update maximum profit
+            if (profit > maxProfit) {
+                maxProfit = profit;
+            }
+        }
+
+        return maxProfit;
+    }
+}
+Task9:
+class Solution {
+    public int firstUniqChar(String s) {
+        int[] freq = new int[26];
+
+        // Count frequency of each character
+        for (int i = 0; i < s.length(); i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
+
+        // Find the first character with frequency 1
+        for (int i = 0; i < s.length(); i++) {
+            if (freq[s.charAt(i) - 'a'] == 1) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+Task10:
+class Solution {
+    public void moveZeroes(int[] nums) 
+    {
+        int index = 0;
+
+        // Move all non-zero elements to the front
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+
+        // Fill the remaining positions with zero
+        while (index < nums.length) {
+            nums[index] = 0;
+            index++;
+        }
+    }
+}      
+Task11:
+class Solution {
+    public void reverseString(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+
+        while (left < right) {
+            // Swap characters
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+
+            left++;
+            right--;
+        }
+    }
+}
