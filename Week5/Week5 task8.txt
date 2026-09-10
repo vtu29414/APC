@@ -1,0 +1,32 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+
+        // Count frequency of each task
+        int[] freq = new int[26];
+
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+
+        // Find the highest frequency
+        int maxFreq = 0;
+
+        for (int f : freq) {
+            maxFreq = Math.max(maxFreq, f);
+        }
+
+        // Number of gaps between the most frequent tasks
+        int gaps = maxFreq - 1;
+
+        // Maximum number of positions that need to be filled
+        int emptySlots = gaps * n;
+
+        // Other tasks can fill some of those positions
+        int otherTasks = tasks.length - maxFreq;
+
+        // Remaining positions must be idle
+        int idle = Math.max(0, emptySlots - otherTasks);
+
+        return tasks.length + idle;
+    }
+}
